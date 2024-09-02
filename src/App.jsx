@@ -7,6 +7,9 @@ import ProductReview from './assests/ProductReview'
 import Cart from './assests/Cart'
 import SignUp from './assests/SignUp'
 import LogIn from './assests/LogIn'
+import 'react-toastify/dist/ReactToastify.css';
+ 
+
 const App = () => {
 
   return (

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { cartFunc } from './redux/cartSlice'
+import { toast, ToastContainer } from 'react-toastify'
 
 const ProductReview = () => {
   const dispatch = useDispatch()
@@ -35,6 +36,7 @@ const ProductReview = () => {
 
   const addToCart = (item) => {
     dispatch(cartFunc(item))
+    toast.success("Item added to the cart")
   }
 
 
@@ -47,6 +49,10 @@ const ProductReview = () => {
  
   return (
     <>
+    <ToastContainer
+    position='bottom-center'
+    theme='dark'
+    />
       <section className="text-gray-600 body-font overflow-hidden">
         <div className=" px-5 py-24 mx-auto">
           <div className="flex flex-row justify-evenly w-full flex-wrap">
