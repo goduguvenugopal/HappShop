@@ -1,6 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const LogIn = () => {
+
+const loginFunc = ()=>{
+  window.open("https://happy-shop-server-e4hu.onrender.com/auth/google/callback","_self")
+}
+
   return (
   
     <div className="flex min-h-full flex-col justify-center px-6 py-24 lg:px-8 bg-black  ">
@@ -62,20 +68,32 @@ const LogIn = () => {
         <div>
           <button
             type="submit"
-            className="flex w-full justify-center rounded-md bg-gradient-to-r from-blue-500 to-pink-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className=" flex w-full justify-center pt-13 rounded-md bg-gradient-to-r from-blue-500 to-pink-600 px-3 py-2  font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Log in
           </button>
+          <h6 className='text-white text-center my-2'>or</h6>
+          <div
+          onClick={loginFunc}
+            type="submit"
+            className="flex w-full cursor-pointer justify-center items-center bg-white  rounded-md border-2 px-3   leading-6 text-black shadow-sm "
+          >
+            <img src="/google.png" alt="google" className='w-12' />
+             <h5 className='font-semibold'>
+              Login with Google
+              
+              </h5>
+          </div>
         </div>
       </form>
       <p className="mt-10 text-center text-sm text-gray-500">
-        Not a member?
-        <a
-          href="#"
-          className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+        Don't have an account? 
+         <Link
+          to="/signup"
+          className="font-semibold leading-6 ml-1 text-indigo-600 hover:text-indigo-500"
         >
-          Start a 14 day free trial
-        </a>
+          Signup
+        </Link>
       </p>
     </div>
   </div>
