@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Footer from './Footer'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Hero from './Hero'
+import { userContext } from '../App'
 
 const Home = () => {
   const [data, setData] = useState([])
@@ -9,6 +10,9 @@ const Home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [filter, setFilter] = useState([])
+  const {userToken} = useContext(userContext)
+  const navigate = useNavigate()
+
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -42,7 +46,7 @@ const Home = () => {
         if (response) {
           const data = await response.json()
           setData(data)
-        setFilter(data)
+          setFilter(data)
 
         }
       } catch (error) {
@@ -58,6 +62,14 @@ const Home = () => {
     const filtered = filter.filter((item) => item.category === title)
     setData(filtered)
   }
+
+
+
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/login")
+    }
+  })
 
   return (
     <>
@@ -104,33 +116,33 @@ const Home = () => {
                   tabIndex={-1}
                 >
                   <div className="py-1" role="none">
-                  <h5
-                      
+                    <h5
+
                       className="block px-4 py-2 text-sm text-gray-700  hover:bg-blue-800 hover:text-white cursor-pointer"
                       role="menuitem"
                       tabIndex={-1}
-                      onClick={()=> setData(filter)}
+                      onClick={() => setData(filter)}
                       id="menu-item-4"
                     >
                       All
                     </h5>
 
                     <h5
-                      
+
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-800 hover:text-white cursor-pointer"
                       role="menuitem"
                       tabIndex={-1}
-                      onClick={()=> filterFunc("electronics")}
+                      onClick={() => filterFunc("electronics")}
                       id="menu-item-0"
                     >
                       Electronics
                     </h5>
                     <h5
-                    
+
                       className="block px-4 py-2 text-sm text-gray-700  hover:bg-blue-800 hover:text-white cursor-pointer"
                       role="menuitem"
                       tabIndex={-1}
-                      onClick={()=> filterFunc("women's clothing")}
+                      onClick={() => filterFunc("women's clothing")}
                       id="menu-item-1"
                     >
                       Women's Ware
@@ -138,21 +150,21 @@ const Home = () => {
                   </div>
                   <div className="py-1" role="none">
                     <h5
-                    
+
                       className="block px-4 py-2 text-sm text-gray-700  hover:bg-blue-800 hover:text-white cursor-pointer"
                       role="menuitem"
                       tabIndex={-1}
-                      onClick={()=> filterFunc("men's clothing")}
+                      onClick={() => filterFunc("men's clothing")}
                       id="menu-item-2"
                     >
                       Men's Ware
                     </h5>
                     <h5
-                      
+
                       className="block px-4 py-2 text-sm text-gray-700  hover:bg-blue-800 hover:text-white cursor-pointer"
                       role="menuitem"
                       tabIndex={-1}
-                      onClick={()=> filterFunc("jewelery")}
+                      onClick={() => filterFunc("jewelery")}
                       id="menu-item-3"
                     >
                       Jewelery

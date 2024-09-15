@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Hero = () => {
+
   return (
     <div className="relative overflow-hidden bg-white mt-5 lg:mt-20">
     <div className="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-20 lg:pt-22">
@@ -81,12 +82,11 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-            <a
-              href="#"
+            <button
               className="bg-gradient-to-r from-purple-500 to-pink-500 inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 "
             >
               Shop Collection
-            </a>
+            </button>
           </div>
         </div>
       </div>
