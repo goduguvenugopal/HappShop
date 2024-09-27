@@ -14,7 +14,7 @@ export const userContext = createContext()
 
 const App = () => {
 const [user , setUser]= useState({})
-const [userToken , setUserToken]= useState("j")
+const [userToken , setUserToken]= useState("u")
  
 console.log(user);
 
