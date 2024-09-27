@@ -45,9 +45,9 @@ const Home = () => {
         const response = await fetch("https://fakestoreapi.com/products")
         if (response) {
           const data = await response.json()
+          
           setData(data)
           setFilter(data)
-
         }
       } catch (error) {
         console.error(error);
@@ -55,6 +55,7 @@ const Home = () => {
     }
 
     fetchFunc()
+     document.title = "Welcome to HappyShop"
   }, [])
 
 

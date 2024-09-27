@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 
 const SignUp = () => {
@@ -42,6 +42,9 @@ const SignUp = () => {
   })
 
 
+  useEffect(()=>{
+    document.title = "Create new account"
+      },[])
   return (
     <>
       <ToastContainer />

@@ -14,8 +14,9 @@ export const userContext = createContext()
 
 const App = () => {
 const [user , setUser]= useState({})
-const [userToken , setUserToken]= useState("")
+const [userToken , setUserToken]= useState("j")
  
+console.log(user);
 
   return (
     <userContext.Provider value={{user , setUser , userToken , setUserToken}}> 

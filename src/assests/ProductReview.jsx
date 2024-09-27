@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +11,28 @@ const ProductReview = () => {
   const { id } = useParams()
   const [data, setData] = useState([])
   const [cartIds, setCartIds] = useState([])
+  const [isHovered, setIsHovered] = useState(false)
+  const [hoverPosition, setHoverPosition] = useState({ x: 0, y: 0 });
+ // useRef to store the previous title to prevent undefined flickering
+ const previousTitle = useRef(document.title);
+ console.log(previousTitle);
  
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseMove = (e) => {
+    console.log(e);
+
+    const { left, top, width, height } = e.target.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setHoverPosition({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   // fetching single product  
   useEffect(() => {
@@ -20,6 +41,7 @@ const ProductReview = () => {
         const response = await fetch(`https://fakestoreapi.com/products/${id}`)
         if (response) {
           const data = await response.json()
+          console.table({ data })
           setData(data)
         }
 
@@ -31,7 +53,23 @@ const ProductReview = () => {
     }
 
     fetchFunc()
+
+
   }, [])
+
+
+  useEffect(() => {
+    if (data && data.title) {
+      // Update the title when data is available
+      document.title = data.title;
+      // Update the previousTitle ref to the new title
+      previousTitle.current = data.title;
+    } else {
+      // Keep the previous title until data is available or use the fallback
+      document.title = previousTitle.current
+    }
+  }, [data]);
+
 
 
   const addToCart = (item) => {
@@ -46,21 +84,39 @@ const ProductReview = () => {
   }, [cartItems])
 
 
- 
+
   return (
     <>
-    <ToastContainer
-    position='bottom-center'
-    theme='dark'
-    />
+      <ToastContainer
+        position='bottom-center'
+        theme='dark'
+      />
       <section className="text-gray-600 body-font overflow-hidden">
         <div className=" px-5 py-24 mx-auto">
           <div className="flex flex-row justify-evenly w-full flex-wrap">
             <img
               alt="ecommerce"
-              className="lg:w-96 lg:h-96"
+              className="lg:w-96 lg:h-96 sm:cursor-zoom-in"
               src={data.image}
+              onMouseEnter={handleMouseEnter}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
             />
+
+            {/* zoomed image display  */}
+            {isHovered && (
+              <div className='fixed right-64 z-50  ' style={{ display: "flex", justifyContent: "flex-end" }}>
+
+                <div className='zoom-container hidden sm:block'>
+                  <img src={data.image} alt="proImage" className="zoomed-image"
+                    style={{
+                      transformOrigin: `${hoverPosition.x}% ${hoverPosition.y}%`,
+                      transform: 'scale(2)', // Zoom level
+                    }} />
+                </div>
+              </div>
+            )}
+
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 {data.category}
@@ -209,8 +265,8 @@ const ProductReview = () => {
                   Go TO CART
                 </Link> : <button onClick={() => addToCart(data)} className="flex ml-auto bg-indigo-800 font-semibold text-white border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                   ADD TO CART
-                </button> }
-                 
+                </button>}
+
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
                     fill="currentColor"

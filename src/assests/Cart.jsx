@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Footer from './Footer'
 import { priceDecFunc, priceFunc, removeFunc } from './redux/cartSlice'
@@ -8,6 +8,9 @@ const Cart = () => {
   const dispatch = useDispatch()
 
 
+  useEffect(()=>{
+    document.title = "My cart products"
+      },[])
 
   // qty increment function 
   const qtyFunc = (itemId) => {

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { userContext } from '../App';
 
@@ -35,12 +35,16 @@ const LogIn = () => {
 
         setUser(user);
         setUserToken(user.uid)
-          navigate("/")
+        navigate("/")
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(()=>{
+document.title = "Login HappyShop do Shopping"
+  },[])
 
 
   return (
